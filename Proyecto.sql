@@ -1,13 +1,18 @@
 -- In case u want to drop any of the tables, here are already each one of the the respectives commands
 
-drop table Area;
-drop table Articulo;
-drop table Autor;
 drop table ArticuloXArea;
 drop table AutoresXArticulo;
 drop table Referencias;
 drop table Revista;
 drop table Publicacion;
+drop table Articulo;
+drop table Autor;
+drop table Area;
+drop sequence codArea_seq;
+drop sequence codArticulo_seq;
+drop sequence codAutor_seq;
+drop sequence codRevista_seq;
+COMMIT;
 
 create table Area(
     codArea number(3,0) not null,
@@ -15,7 +20,7 @@ create table Area(
     primary key(codArea)
 );
 
-create sequence codArea START WITH 1; -- Para que el codigo no se repite y se auto-incremente desde 1 lol
+create sequence codArea_seq START WITH 1; -- Para que el codigo no se repite y se auto-incremente desde 1 lol
 
 create table Articulo(
     codArticulo number(3, 0) not null, 
@@ -23,7 +28,7 @@ create table Articulo(
     publishedDate date not null,
     primary key(codArticulo)
 );
-create sequence codArticulo START WITH 99 INCREMENT BY 2;
+create sequence codArticulo_seq START WITH 99 INCREMENT BY 2;
 
 create table ArticuloXArea(
     codArea number(3,0) not null,
@@ -41,7 +46,7 @@ create table Autor(
     ),
     primary key (codAutor)
 );
-create sequence codAutor START WITH 1000;
+create sequence codAutor_seq START WITH 1000;
 
 create table AutoresXArticulo(
     codAutor number(4, 0) not null,
@@ -69,7 +74,7 @@ create table Revista(
     ),
     primary key (codRevista)
 );
-create sequence codRevista START WITH 1 INCREMENT BY 4;
+create sequence codRevista_seq START WITH 1 INCREMENT BY 4;
 
 create table Publicacion(
     codRevista number(3, 0) not null,
@@ -84,17 +89,17 @@ create table Publicacion(
 -- VALUES THAT ARE IN THE PROJECT STATEMENT AS EXAMPLES 
 
 -- Areas
-insert into Area values (codArea.NEXTVAL, 'Matematicas');
-insert into Area values (codArea.NEXTVAL, 'Computacion');
-insert into Area values (codArea.NEXTVAL, 'Ciencias de la Informacion');
-insert into Area values (codArea.NEXTVAL, 'Ingenieria Civil');
-insert into Area values (codArea.NEXTVAL, 'Ingenieria Mecanica');
+insert into Area values (codArea_seq.NEXTVAL, 'Matematicas');
+insert into Area values (codArea_seq.NEXTVAL, 'Computacion');
+insert into Area values (codArea_seq.NEXTVAL, 'Ciencias de la Informacion');
+insert into Area values (codArea_seq.NEXTVAL, 'Ingenieria Civil');
+insert into Area values (codArea_seq.NEXTVAL, 'Ingenieria Mecanica');
 
 -- Articles
-insert into Articulo values (codArticulo.NEXTVAL, 'MER', to_date('22/08/2020', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'Corrupcion en LatinoAmerica', to_date('22/08/2008', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'Corrupcion en Colombia', to_date('22/08/2018', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'El futbol desde la optica fisica', to_date('22/08/2010', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo_seq.NEXTVAL, 'MER', to_date('22/08/2020', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo_seq.NEXTVAL, 'Corrupcion en LatinoAmerica', to_date('22/08/2008', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo_seq.NEXTVAL, 'Corrupcion en Colombia', to_date('22/08/2018', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo_seq.NEXTVAL, 'El futbol desde la optica fisica', to_date('22/08/2010', 'DD/MM/YYYY'));
 
 -- Article X Area
 insert into ArticuloXArea values (3, 100);
@@ -105,10 +110,10 @@ insert into ArticuloXArea values (11, 102);
 insert into ArticuloXArea values (10, 102);
 
 -- Autors
-insert into Autor values (codAutor.NEXTVAL, 'Pedro', 'Perez', to_date('01/01/1980', 'DD/MM/YYYY'), 'pedritop@gmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Maria', 'Perez', to_date('01/01/2000', 'DD/MM/YYYY'), 'mari000@hotmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Juan', 'Vasquez', to_date('02/12/2001', 'DD/MM/YYYY'), 'VasquezWarrior21@gmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Juan', 'Perez', to_date('01/01/1960', 'DD/MM/YYYY'), 'juanitop@outlook.com');
+insert into Autor values (codAutor_seq.NEXTVAL, 'Pedro', 'Perez', to_date('01/01/1980', 'DD/MM/YYYY'), 'pedritop@gmail.com');
+insert into Autor values (codAutor_seq.NEXTVAL, 'Maria', 'Perez', to_date('01/01/2000', 'DD/MM/YYYY'), 'mari000@hotmail.com');
+insert into Autor values (codAutor_seq.NEXTVAL, 'Juan', 'Vasquez', to_date('02/12/2001', 'DD/MM/YYYY'), 'VasquezWarrior21@gmail.com');
+insert into Autor values (codAutor_seq.NEXTVAL, 'Juan', 'Perez', to_date('01/01/1960', 'DD/MM/YYYY'), 'juanitop@outlook.com');
 
 /*delete from AutoresXArticulo;
 ALTER TABLE AutoresXArticulo MODIFY rol varchar2(1);*/
@@ -123,10 +128,10 @@ insert into Referencias values (101, 102);
 insert into Referencias values (103, 100);
 
 -- Magazine
-insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYS J', 'A2');
-insert into Revista values (codRevista.NEXTVAL, to_date('23/12/2012', 'DD/MM/YYYY'), 'CELL', 'C');
-insert into Revista values (codRevista.NEXTVAL, to_date('08/05/2004', 'DD/MM/YYYY'), 'SCIENCE', 'B');
-insert into Revista values (codRevista.NEXTVAL, to_date('29/02/2020', 'DD/MM/YYYY'), 'J BIOL CHEM', 'A1');
+insert into Revista values (codRevista_seq.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYS J', 'A2');
+insert into Revista values (codRevista_seq.NEXTVAL, to_date('23/12/2012', 'DD/MM/YYYY'), 'CELL', 'C');
+insert into Revista values (codRevista_seq.NEXTVAL, to_date('08/05/2004', 'DD/MM/YYYY'), 'SCIENCE', 'B');
+insert into Revista values (codRevista_seq.NEXTVAL, to_date('29/02/2020', 'DD/MM/YYYY'), 'J BIOL CHEM', 'A1');
 
 -- Publication
 insert into  Publicacion values (9, 100, to_date('08/05/2004', 'DD/MM/YYYY'));
@@ -138,23 +143,23 @@ insert into  Publicacion values (5, 102, to_date('23/12/2012', 'DD/MM/YYYY'));
 -- THE VALUES HERE ARE INVENTED
 
 -- Areas
-insert into Area values (codArea.NEXTVAL, 'Matematica');
-insert into Area values (codArea.NEXTVAL, 'Ciencias Fisicas');
-insert into Area values (codArea.NEXTVAL, 'Ciencias Quimicas');
-insert into Area values (codArea.NEXTVAL, 'Medicina');
-insert into Area values (codArea.NEXTVAL, 'Psicologia');
-insert into Area values (codArea.NEXTVAL, 'Derecho');
-insert into Area values (codArea.NEXTVAL, 'Lenguas');
-insert into Area values (codArea.NEXTVAL, 'Agricultura');
+insert into Area values (codArea_seq.NEXTVAL, 'Matematica');
+insert into Area values (codArea_seq.NEXTVAL, 'Ciencias Fisicas');
+insert into Area values (codArea_seq.NEXTVAL, 'Ciencias Quimicas');
+insert into Area values (codArea_seq.NEXTVAL, 'Medicina');
+insert into Area values (codArea_seq.NEXTVAL, 'Psicologia');
+insert into Area values (codArea_seq.NEXTVAL, 'Derecho');
+insert into Area values (codArea_seq.NEXTVAL, 'Lenguas');
+insert into Area values (codArea_seq.NEXTVAL, 'Agricultura');
 
 -- Articles
-insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo_seq.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY'));
 
 -- Article X Area
 insert into ArticuloXArea values (2, 104);
 
 -- Autors
-insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com');
+insert into Autor values (codAutor_seq.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com');
 
 -- Autors X Article
 
@@ -209,5 +214,4 @@ select * from Publicacion;
 
 
 /* QUERY #8 */ -- ERNESTO
-
 
