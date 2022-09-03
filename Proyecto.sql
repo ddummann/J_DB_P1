@@ -218,7 +218,9 @@ select * from Publicacion;
 
 /* QUERY #7 */ -- KEVIN
 
-
+delete from Autor
+where Autor.codautor not in (select codautor
+                             from AutoresXArticulo);
 
 /* QUERY #8 */ -- ERNESTO
 
