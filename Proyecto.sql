@@ -159,16 +159,23 @@ insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informá
 insert into ArticuloXArea values (2, 104);
 
 -- Autors
-insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com');
+insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com'); --autora del mismo
+insert into Autor values (codAutor.NEXTVAL, 'Miranda', 'Croosgrove', to_date('08/12/1976', 'DD/MM/YYYY'), 'mirandita@gmail.com'); --coautora del mismo
+insert into Autor values (codAutor.NEXTVAL, 'Miguel', 'Hernandez', to_date('08/12/1976', 'DD/MM/YYYY'), 'miguelherna25@gmail.com'); --autor sin articulos
+
+SELECT * FROM AUTOR;
 
 -- Autors X Article
 insert into AutoresXArticulo values (1000, 99, 'P');
+insert into AutoresXArticulo values (1001, 99, 'C');
 
 -- References
 insert into Referencias values (99, 101);
 
 -- Magazine
 insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYSICS', 'A2');
+insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2015', 'DD/MM/YYYY'), 'MECHATRONICS', 'A1'); --revista que no ha publicado ningun articulo
+
 
 -- Publication
 insert into Publicacion values (1, 99, to_date('23/12/2019', 'DD/MM/YYYY'));
