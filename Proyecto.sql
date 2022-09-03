@@ -1,13 +1,17 @@
 -- In case u want to drop any of the tables, here are already each one of the the respectives commands
 
-drop table Area;
-drop table Articulo;
-drop table Autor;
-drop table ArticuloXArea;
-drop table AutoresXArticulo;
-drop table Referencias;
-drop table Revista;
-drop table Publicacion;
+drop table Area cascade constraints;
+drop table Articulo cascade constraints;
+drop table Autor cascade constraints;
+drop table ArticuloXArea cascade constraints;
+drop table AutoresXArticulo cascade constraints;
+drop table Referencias cascade constraints;
+drop table Revista cascade constraints;
+drop table Publicacion cascade constraints;
+drop sequence codArea; 
+drop sequence codArticulo ;
+drop sequence codAutor;
+drop sequence codRevista;
 
 create table Area(
     codArea number(3,0) not null,
@@ -97,7 +101,7 @@ insert into Articulo values (codArticulo.NEXTVAL, 'El futbol desde la optica fis
 
 -- Article X Area
 insert into ArticuloXArea values (3, 100);
-insert into ArticuloXArea values (7, 103);
+insert into ArticuloXArea values (1, 103);
 insert into ArticuloXArea values (11, 101);
 insert into ArticuloXArea values (10, 101);
 insert into ArticuloXArea values (11, 102);
@@ -147,7 +151,9 @@ insert into Area values (codArea.NEXTVAL, 'Lenguas');
 insert into Area values (codArea.NEXTVAL, 'Agricultura');
 
 -- Articles
-insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY'));
+insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY')); --referenciado
+insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informática', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
+
 
 -- Article X Area
 insert into ArticuloXArea values (2, 104);
@@ -156,16 +162,16 @@ insert into ArticuloXArea values (2, 104);
 insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com');
 
 -- Autors X Article
-
+insert into AutoresXArticulo values (1000, 99, 'P');
 
 -- References
-
+insert into Referencias values (99, 101);
 
 -- Magazine
-
+insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYSICS', 'A2');
 
 -- Publication
-
+insert into Publicacion values (1, 99, to_date('23/12/2019', 'DD/MM/YYYY'));
 
 
 
