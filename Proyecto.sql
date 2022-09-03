@@ -36,8 +36,7 @@ create table Autor(
     nameAutor varchar(25) not null,
     lastNameAutor varchar(25) not null,
     bithDateAutor date,
-    emailAdress varchar(40) not null check (
-        regexp_like(emailAdress, '\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b') -- if username has a '_', it doesnt allow the insert and shows an error, ask to the professor
+    emailAdress varchar(40) not null check (emailAdress like '%_@__%.__%' -- if username has a '_', it doesnt allow the insert and shows an error, ask to the professor
     ),
     primary key (codAutor)
 );
