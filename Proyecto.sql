@@ -152,7 +152,7 @@ insert into Area values (codArea.NEXTVAL, 'Agricultura');
 
 -- Articles
 insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY')); --referenciado
-insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad inform�tica', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
+insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informática', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
 
 
 -- Article X Area
@@ -206,6 +206,13 @@ select * from Publicacion;
 
 /* QUERY #4 */
 
+select A.nameArticulo "Artículo(s) referenciado(s) en todos los demás" 
+from Articulo A
+where A.codArticulo in (select R.codArtiRef2
+from Referencias R
+having count(*) = (select count(*) - 1 as art_n
+    from Articulo)
+group by R.codArtiRef2);
 
 
 /* QUERY #5 */ -- KEVIN
