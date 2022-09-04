@@ -1,4 +1,6 @@
--- In case u want to drop any of the tables, here are already each one of the the respectives commands
+/*Proyecto 1 -  Ernesto Duarte, Daniel Orjuela, David Valderrama y Kevin Velasco*/
+
+-- In case you want to drop any of the tables, here are already each one of the the respectives commands
 
 drop table Area cascade constraints;
 drop table Articulo cascade constraints;
@@ -86,61 +88,6 @@ create table Publicacion(
 
 
 /* INSERTERS */ 
--- VALUES THAT ARE IN THE PROJECT STATEMENT AS EXAMPLES 
-
--- Areas
-insert into Area values (codArea.NEXTVAL, 'Matematicas');
-insert into Area values (codArea.NEXTVAL, 'Computacion');
-insert into Area values (codArea.NEXTVAL, 'Ciencias de la Informacion');
-insert into Area values (codArea.NEXTVAL, 'Ingenieria Civil');
-insert into Area values (codArea.NEXTVAL, 'Ingenieria Mecanica');
-
--- Articles
-insert into Articulo values (codArticulo.NEXTVAL, 'MER', to_date('22/08/2020', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'Corrupcion en LatinoAmerica', to_date('22/08/2008', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'Corrupcion en Colombia', to_date('22/08/2018', 'DD/MM/YYYY'));
-insert into Articulo values (codArticulo.NEXTVAL, 'El futbol desde la optica fisica', to_date('22/08/2010', 'DD/MM/YYYY'));
-
--- Article X Area
-insert into ArticuloXArea values (3, 100);
-insert into ArticuloXArea values (1, 103);
-insert into ArticuloXArea values (11, 101);
-insert into ArticuloXArea values (10, 101);
-insert into ArticuloXArea values (11, 102);
-insert into ArticuloXArea values (10, 102);
-
--- Autors
-insert into Autor values (codAutor.NEXTVAL, 'Pedro', 'Perez', to_date('01/01/1980', 'DD/MM/YYYY'), 'pedritop@gmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Maria', 'Perez', to_date('01/01/2000', 'DD/MM/YYYY'), 'mari000@hotmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Juan', 'Vasquez', to_date('02/12/2001', 'DD/MM/YYYY'), 'VasquezWarrior21@gmail.com');
-insert into Autor values (codAutor.NEXTVAL, 'Juan', 'Perez', to_date('01/01/1960', 'DD/MM/YYYY'), 'juanitop@outlook.com');
-
-/*delete from AutoresXArticulo;
-ALTER TABLE AutoresXArticulo MODIFY rol varchar2(1);*/
--- Autors X Article
-insert into AutoresXArticulo values (1002, 100, 'P');
-insert into AutoresXArticulo values (1003, 102, 'C');
-insert into AutoresXArticulo values (1003, 101, 'P');
-insert into AutoresXArticulo values (1004, 103, 'C');
-
--- References
-insert into Referencias values (101, 102);
-insert into Referencias values (103, 100);
-
--- Magazine
-insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYS J', 'A2');
-insert into Revista values (codRevista.NEXTVAL, to_date('23/12/2012', 'DD/MM/YYYY'), 'CELL', 'C');
-insert into Revista values (codRevista.NEXTVAL, to_date('08/05/2004', 'DD/MM/YYYY'), 'SCIENCE', 'B');
-insert into Revista values (codRevista.NEXTVAL, to_date('29/02/2020', 'DD/MM/YYYY'), 'J BIOL CHEM', 'A1');
-
--- Publication
-insert into  Publicacion values (9, 100, to_date('08/05/2004', 'DD/MM/YYYY'));
-insert into  Publicacion values (1, 103, to_date('11/03/2002', 'DD/MM/YYYY'));
-insert into  Publicacion values (5, 101, to_date('23/12/2012', 'DD/MM/YYYY'));
-insert into  Publicacion values (5, 102, to_date('23/12/2012', 'DD/MM/YYYY'));
-
-
--- THE VALUES HERE ARE INVENTED
 
 -- Areas
 insert into Area values (codArea.NEXTVAL, 'Matematica');
@@ -181,18 +128,6 @@ insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2015', 'DD/MM/YYY
 
 -- Publication
 insert into Publicacion values (1, 99, to_date('23/12/2019', 'DD/MM/YYYY'));
-
-
-
-/* SELECTERS */ -- Note: This selecters r just for testing and checking what are the current values in the different tables, has nothing to do with the project
-select * from Area;
-select * from Articulo;
-select * from ArticuloXArea;
-select * from Autor;
-select * from AutoresXArticulo;
-select * from Referencias;
-select * from Revista;
-select * from Publicacion;
 
 
 /* QUERY #1 */
@@ -363,11 +298,13 @@ select *
 from  menores mn, mayores my
 inner join mayores on mn.anio = my.anio;
 
+
 /* QUERY #7 */
 
 delete from Autor
 where Autor.codautor not in (select codautor
                              from AutoresXArticulo);
+
 
 /* QUERY #8 */
 
