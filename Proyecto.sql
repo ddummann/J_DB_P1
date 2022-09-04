@@ -118,14 +118,19 @@ insert into Autor values (codAutor.NEXTVAL, 'Juan', 'Perez', to_date('01/01/1960
 /*delete from AutoresXArticulo;
 ALTER TABLE AutoresXArticulo MODIFY rol varchar2(1);*/
 -- Autors X Article
-insert into AutoresXArticulo values (1002, 100, 'P');
-insert into AutoresXArticulo values (1003, 102, 'C');
+insert into AutoresXArticulo values (1002, 99, 'P');
+insert into AutoresXArticulo values (1003, 99, 'C');
 insert into AutoresXArticulo values (1003, 101, 'P');
-insert into AutoresXArticulo values (1004, 103, 'C');
+insert into AutoresXArticulo values (1001, 103, 'C');
 
 -- References
-insert into Referencias values (101, 102);
-insert into Referencias values (103, 100);
+insert into Referencias values (101, 103);
+insert into Referencias values (103, 99);
+insert into Referencias values (101, 99);
+insert into Referencias values (99, 103);
+insert into Referencias values (105, 101);
+insert into Referencias values (105, 99);
+insert into Referencias values (105, 103);
 
 -- Magazine
 insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYS J', 'A2');
@@ -134,54 +139,10 @@ insert into Revista values (codRevista.NEXTVAL, to_date('08/05/2004', 'DD/MM/YYY
 insert into Revista values (codRevista.NEXTVAL, to_date('29/02/2020', 'DD/MM/YYYY'), 'J BIOL CHEM', 'A1');
 
 -- Publication
-insert into  Publicacion values (9, 100, to_date('08/05/2004', 'DD/MM/YYYY'));
+insert into  Publicacion values (9, 99, to_date('08/05/2004', 'DD/MM/YYYY'));
 insert into  Publicacion values (1, 103, to_date('11/03/2002', 'DD/MM/YYYY'));
 insert into  Publicacion values (5, 101, to_date('23/12/2012', 'DD/MM/YYYY'));
-insert into  Publicacion values (5, 102, to_date('23/12/2012', 'DD/MM/YYYY'));
-
-
--- THE VALUES HERE ARE INVENTED
-
--- Areas
-insert into Area values (codArea.NEXTVAL, 'Matematica');
-insert into Area values (codArea.NEXTVAL, 'Ciencias Fisicas');
-insert into Area values (codArea.NEXTVAL, 'Ciencias Quimicas');
-insert into Area values (codArea.NEXTVAL, 'Medicina');
-insert into Area values (codArea.NEXTVAL, 'Psicologia');
-insert into Area values (codArea.NEXTVAL, 'Derecho');
-insert into Area values (codArea.NEXTVAL, 'Lenguas');
-insert into Area values (codArea.NEXTVAL, 'Agricultura');
-
--- Articles
-insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY')); --referenciado
-insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informática', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
-
-
--- Article X Area
-insert into ArticuloXArea values (2, 104);
-
--- Autors
-insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com'); --autora del mismo
-insert into Autor values (codAutor.NEXTVAL, 'Miranda', 'Croosgrove', to_date('08/12/1976', 'DD/MM/YYYY'), 'mirandita@gmail.com'); --coautora del mismo
-insert into Autor values (codAutor.NEXTVAL, 'Miguel', 'Hernandez', to_date('08/12/1976', 'DD/MM/YYYY'), 'miguelherna25@gmail.com'); --autor sin articulos
-
-SELECT * FROM AUTOR;
-
--- Autors X Article
-insert into AutoresXArticulo values (1000, 99, 'P');
-insert into AutoresXArticulo values (1001, 99, 'C');
-
--- References
-insert into Referencias values (99, 101);
-
--- Magazine
-insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2002', 'DD/MM/YYYY'), 'ASTROPHYSICS', 'A2');
-insert into Revista values (codRevista.NEXTVAL, to_date('11/03/2015', 'DD/MM/YYYY'), 'MECHATRONICS', 'A1'); --revista que no ha publicado ningun articulo
-
-
--- Publication
-insert into Publicacion values (1, 99, to_date('23/12/2019', 'DD/MM/YYYY'));
-
+insert into  Publicacion values (5, 103, to_date('23/12/2012', 'DD/MM/YYYY'));
 
 
 /* SELECTERS */ -- Note: This selecters r just for testing and checking what are the current values in the different tables, has nothing to do with the project
