@@ -38,3 +38,6 @@
 - Se puede dar el caso de Revistas que aun no han publicado ningún artículo
 - Un ejemplo de tipos de áreas lo encuentra en :
 - https://minciencias.gov.co/sites/default/files/upload/convocatoria/m304pr03an01_modelo_de_clasificacion_de_revistas_-_publindex_v02.pdf  (Anexo a)
+
+PROBLEMS!!
+In case you got an error in line 225 from query number 5, please in the last select, change 'Año' to Anio and 'NumeroArtÍculosPublicadosEnRevistas' to NumeroArticulosPublicadosEnRevistas without the accent mark and the 'ñ'.
