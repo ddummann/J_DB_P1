@@ -78,7 +78,9 @@ create table Publicacion(
     codRevista number(3, 0) not null,
     codArticulo number(3, 0) not null, 
     publishedDate_p date not null,
-    primary key (codRevista, codArticulo, publishedDate_p)
+    primary key (codRevista, codArticulo, publishedDate_p),
+    foreign key (codRevista) references Revista,
+    foreign key (codArticulo) references Articulo
 );
 
 
