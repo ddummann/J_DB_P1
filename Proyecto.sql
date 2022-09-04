@@ -203,6 +203,39 @@ select * from Publicacion;
 -- DAVID
 /* QUERY #3 */
 
+with num1 as (select A.nameArticulo as num1_name, count(R.codArtiRef2) as num1_req
+from Articulo A left join Referencias R on A.codArticulo = R.codArtiRef2
+group by A.nameArticulo),
+
+num2 as(select A.nameArticulo as num2_name, count(R.codArtiRef1) as num2_req
+from Articulo A left join Referencias R on A.codArticulo = R.codArtiRef1
+group by A.nameArticulo),
+
+prereq3 as (select X.codArticulo as prerq, X.codAutor as preauth
+from AutoresXArticulo X
+where X.rol = 'P'),
+
+num3 as (select A.nameArticulo as num3_name, count(Y.preauth) as num3_req
+from Articulo A left join prereq3 Y on A.codArticulo = Y.prerq
+group by A.nameArticulo),
+
+prereq4 as (select X.codArticulo as prerq1, X.codAutor as preauth1
+from AutoresXArticulo X
+where X.rol = 'C'),
+
+num4 as (select A.nameArticulo as num4_name, count(Y.preauth1) as num4_req
+from Articulo A left join prereq4 Y on A.codArticulo = Y.prerq1
+group by A.nameArticulo),
+
+num5 as (select A.nameArticulo as num5_name, count(P.codRevista) as num5_req
+from Articulo A left join Publicacion P on A.codArticulo = P.codArticulo
+group by A.nameArticulo)
+
+select A.nameArticulo "Nombre Artículo", num1.num1_req "Artículos en los que es referenciado", num2.num2_req "Artículos que referencia", num3.num3_req "Número de autores principales", num4.num4_req "Número de coautores", num5.num5_req "Número de revistas (diferentes) publicado"
+from Articulo A, num1, num2, num3, num4, num5
+where A.nameArticulo = num1.num1_name and A.nameArticulo = num2.num2_name and A.nameArticulo = num3.num3_name and A.nameArticulo = num4.num4_name and A.nameArticulo = num5.num5_name
+order by A.codArticulo ASC;
+
 
 /* QUERY #4 */
 
