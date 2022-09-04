@@ -312,4 +312,19 @@ where Autor.codautor not in (select codautor
 
 /* QUERY #8 */ -- ERNESTO
 
+create view autores_revista as
+with abc as (select distinct A.codAutor as abc_1, P.codArticulo as abc_2
+from Autor A, AutoresXArticulo X, Publicacion P
+where A.codAutor = X.codAutor and X.codArticulo = P.codArticulo),
+
+xyz as (select A.codAutor as xyz_1, count(E.abc_2) as xyz_2
+from Autor A left join abc E on A.codAutor = E.abc_1
+group by A.codAutor)
+
+select A.nameAutor || ' ' || A.lastNameAutor as NombreAutor, A.bithDateAutor, xyz.xyz_2 "Artículos Publicados"
+from Autor A, xyz
+where xyz.xyz_1 = A.codAutor;
+
+grant all on autores_revista to public;
+
 
