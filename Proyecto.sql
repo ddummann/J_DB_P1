@@ -302,7 +302,61 @@ with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count
 
 /* QUERY #6 */ -- ERNESTO
 
+with autoresarticulos as (
+select autor.nameautor, articulo.namearticulo, articulo.codarticulo, autor.bithdateautor, autor.bithdateautor as fecha
+from autoresxarticulo, articulo, autor
+where autoresxarticulo.codautor = autor.codautor and autoresxarticulo.codarticulo = articulo.codarticulo
+),
 
+publicacionarticulo as(
+select articulo.codarticulo, extract(year from publicacion.publisheddate_p) as anio
+from publicacion, articulo
+where articulo.codarticulo = publicacion.codarticulo
+),
+
+anios as (
+select anio
+from publicacionarticulo
+group by anio
+),
+
+menor as (
+select MAX(bithdateautor) as menanio
+from autoresarticulos
+),
+
+mayor as (
+select MIN(bithdateautor) as maxanio
+from autoresarticulos
+),
+
+autores as (
+select publicacionarticulo.anio, autoresarticulos.nameautor, autoresarticulos.bithdateautor
+from anios, publicacionarticulo, autoresarticulos
+where anios.anio = publicacionarticulo.anio and publicacionarticulo.codarticulo = autoresarticulos.codarticulo
+),
+
+menores as (
+select a.anio, a.nameautor, a.bithdateautor
+from autores a
+where a.bithdateautor = (select max(a2.bithdateautor)
+                         from autores a2
+                         where a2.anio = a.anio
+                        )
+),
+
+mayores as (
+select a.anio, a.nameautor, a.bithdateautor
+from autores a
+where a.bithdateautor = (select min(a2.bithdateautor)
+                         from autores a2
+                         where a2.anio = a.anio
+                        )
+)
+
+select *
+from  menores mn, mayores my
+inner join mayores on mn.anio = my.anio;
 
 /* QUERY #7 */ -- KEVIN
 
