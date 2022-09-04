@@ -103,7 +103,6 @@ insert into Area values (codArea.NEXTVAL, 'Agricultura');
 insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY')); --referenciado
 insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informÃ¡tica', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
 
-
 -- Article X Area
 insert into ArticuloXArea values (2, 104);
 
@@ -111,8 +110,6 @@ insert into ArticuloXArea values (2, 104);
 insert into Autor values (codAutor.NEXTVAL, 'Marta', 'Nieto', to_date('08/12/1974', 'DD/MM/YYYY'), 'martanietoge80@gmail.com'); --autora del mismo
 insert into Autor values (codAutor.NEXTVAL, 'Miranda', 'Croosgrove', to_date('08/12/1976', 'DD/MM/YYYY'), 'mirandita@gmail.com'); --coautora del mismo
 insert into Autor values (codAutor.NEXTVAL, 'Miguel', 'Hernandez', to_date('08/12/1976', 'DD/MM/YYYY'), 'miguelherna25@gmail.com'); --autor sin articulos
-
-SELECT * FROM AUTOR;
 
 -- Autors X Article
 insert into AutoresXArticulo values (1000, 99, 'P');
@@ -308,6 +305,8 @@ where Autor.codautor not in (select codautor
 
 /* QUERY #8 */
 
+drop view autores_revista;
+
 create view autores_revista as
 with abc as (select distinct A.codAutor as abc_1, P.codArticulo as abc_2
 from Autor A, AutoresXArticulo X, Publicacion P
@@ -322,4 +321,3 @@ from Autor A, xyz
 where xyz.xyz_1 = A.codAutor;
 
 grant all on autores_revista to public;
-
