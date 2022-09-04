@@ -40,7 +40,7 @@ create table Autor(
     nameAutor varchar(25) not null,
     lastNameAutor varchar(25) not null,
     bithDateAutor date,
-    emailAdress varchar(40) not null check (emailAdress like '%_@__%.__%' -- if username has a '_', it doesnt allow the insert and shows an error, ask to the professor
+    emailAdress varchar(40) not null check (emailAdress like '%_@__%.__%'
     ),
     primary key (codAutor)
 );
@@ -195,8 +195,14 @@ select * from Revista;
 select * from Publicacion;
 
 
--- DANIEL
 /* QUERY #1 */
+select concat(concat(lastNameAutor, ' ') , nameAutor) as "Nombre Completo: ", round((to_date(SYSDATE) - birthDateAutor)/365, 1) as "Edad: ",
+        nvl(nameArticulo, 'No ha publicado') as "Nombre del Articulo: ", nvl(publishedDate, '01/01/0001') as "Fecha de Publicacion: ",
+        axa.codArticulo 
+from Autor natural left outer join autoresxarticulo axa, 
+    articulo inner join autoresxarticulo axa2 on (articulo.codArticulo = axa2.codArticulo)
+where axa.codArticulo = articulo.codArticulo
+order by(lastNameAutor) asc, (nameAutor) asc;
 
 
 /* QUERY #2 */
@@ -204,19 +210,19 @@ select "Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor:
 from (
         select concat(concat(lastNameAutor, ' '), nameAutor) as "Nombre Autor: ", 
         (
-         select count(*) 
-         from autoresxarticulo aXa 
-         where aXa.codAutor = Autor.codAutor
+            select count(*) 
+            from autoresxarticulo aXa 
+            where aXa.codAutor = Autor.codAutor
          ) as "Numero de Articulos: ", 
         (
-         select count(*) 
-         from autoresxarticulo aXa 
-         where aXa.codAutor = Autor.codAutor and aXa.rol = 'P'
+            select count(*) 
+            from autoresxarticulo aXa 
+            where aXa.codAutor = Autor.codAutor and aXa.rol = 'P'
         ) as "Autor Principal: ", 
         (
-         select count(*) 
-         from autoresxarticulo aXa 
-         where aXa.codAutor = Autor.codAutor and aXa.rol = 'C'
+            select count(*) 
+            from autoresxarticulo aXa 
+            where aXa.codAutor = Autor.codAutor and aXa.rol = 'C'
         ) as "Coautor: ", 
          firstDate, lastDate, nvl(( 
             select LISTAGG(nameArea, ';') as "Areas"
@@ -234,7 +240,6 @@ from (
     )
 group by ("Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor: ");
 
--- DAVID
 /* QUERY #3 */
 
 with num1 as (select A.nameArticulo as num1_name, count(R.codArtiRef2) as num1_req
@@ -282,7 +287,7 @@ having count(*) = (select count(*) - 1 as art_n
 group by R.codArtiRef2);
 
 
-/* QUERY #5 */ -- KEVIN
+/* QUERY #5 */
 
 select * from publicacion;
 with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count(codarticulo) as cuentarti
@@ -300,7 +305,7 @@ with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count
                                                                                                                                                                  from numeroarticulos natural join numeroautores natural join porcentaje);
                                                                                                                                                                  
 
-/* QUERY #6 */ -- ERNESTO
+/* QUERY #6 */
 
 with autoresarticulos as (
 select autor.nameautor, articulo.namearticulo, articulo.codarticulo, autor.bithdateautor, autor.bithdateautor as fecha
@@ -358,13 +363,13 @@ select *
 from  menores mn, mayores my
 inner join mayores on mn.anio = my.anio;
 
-/* QUERY #7 */ -- KEVIN
+/* QUERY #7 */
 
 delete from Autor
 where Autor.codautor not in (select codautor
                              from AutoresXArticulo);
 
-/* QUERY #8 */ -- ERNESTO
+/* QUERY #8 */
 
 create view autores_revista as
 with abc as (select distinct A.codAutor as abc_1, P.codArticulo as abc_2
