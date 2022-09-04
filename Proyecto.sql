@@ -154,7 +154,7 @@ insert into Area values (codArea.NEXTVAL, 'Agricultura');
 
 -- Articles
 insert into Articulo values (codArticulo.NEXTVAL, 'Un gran avance en la memoria de los ordenadores', to_date('09/09/2018', 'DD/MM/YYYY')); --referenciado
-insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informática', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
+insert into Articulo values (codArticulo.NEXTVAL, 'Memoria, una realidad informÃ¡tica', to_date('08/08/2020', 'DD/MM/YYYY')); --el que lo referencia
 
 
 -- Article X Area
@@ -200,7 +200,39 @@ select * from Publicacion;
 
 
 /* QUERY #2 */
-
+select "Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor: ", min(firstDate) as "Fecha Primera Publicación: ", max(lastDate)  as "Fecha Ultima Publicación", (LISTAGG(Areas, ';') WITHIN GROUP (order by Areas)) as "Areas: "
+from (
+        select concat(concat(lastNameAutor, ' '), nameAutor) as "Nombre Autor: ", 
+        (
+         select count(*) 
+         from autoresxarticulo aXa 
+         where aXa.codAutor = Autor.codAutor
+         ) as "Numero de Articulos: ", 
+        (
+         select count(*) 
+         from autoresxarticulo aXa 
+         where aXa.codAutor = Autor.codAutor and aXa.rol = 'P'
+        ) as "Autor Principal: ", 
+        (
+         select count(*) 
+         from autoresxarticulo aXa 
+         where aXa.codAutor = Autor.codAutor and aXa.rol = 'C'
+        ) as "Coautor: ", 
+         firstDate, lastDate, nvl(( 
+            select LISTAGG(nameArea, ';') as "Areas"
+            from Area natural left join ArticuloXArea
+            where codArticulo = auXar.codArticulo)
+            ,
+            '"No ha publicado"') Areas
+        from Autor left outer join ( 
+            select min(publishedDate_p) firstDate,
+                   max(publishedDate_p) lastDate,
+                   codArticulo, codAutor
+            from Publicacion natural full join autoresXArticulo
+            group by (codArticulo, codAutor)
+        ) auXar on (auXar.codAutor = Autor.codAutor)
+    )
+group by ("Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor: ");
 
 -- DAVID
 /* QUERY #3 */
@@ -233,7 +265,7 @@ num5 as (select A.nameArticulo as num5_name, count(P.codRevista) as num5_req
 from Articulo A left join Publicacion P on A.codArticulo = P.codArticulo
 group by A.nameArticulo)
 
-select A.nameArticulo "Nombre Artículo", num1.num1_req "Artículos en los que es referenciado", num2.num2_req "Artículos que referencia", num3.num3_req "Número de autores principales", num4.num4_req "Número de coautores", num5.num5_req "Número de revistas (diferentes) publicado"
+select A.nameArticulo "Nombre ArtÃ­culo", num1.num1_req "ArtÃ­culos en los que es referenciado", num2.num2_req "ArtÃ­culos que referencia", num3.num3_req "NÃºmero de autores principales", num4.num4_req "NÃºmero de coautores", num5.num5_req "NÃºmero de revistas (diferentes) publicado"
 from Articulo A, num1, num2, num3, num4, num5
 where A.nameArticulo = num1.num1_name and A.nameArticulo = num2.num2_name and A.nameArticulo = num3.num3_name and A.nameArticulo = num4.num4_name and A.nameArticulo = num5.num5_name
 order by A.codArticulo ASC;
@@ -241,7 +273,7 @@ order by A.codArticulo ASC;
 
 /* QUERY #4 */
 
-select A.nameArticulo "Artículo(s) referenciado(s) en todos los demás" 
+select A.nameArticulo "ArtÃ­culo(s) referenciado(s) en todos los demÃ¡s" 
 from Articulo A
 where A.codArticulo in (select R.codArtiRef2
 from Referencias R
@@ -261,7 +293,7 @@ with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count
                                                 group by to_char(publisheddate_p, 'yyyy')
                                                     ), total as (select sum(cuentarti) totaltotal
                                                                  from numeroarticulos), porcentaje as  (select numeroarticulos.year1, cuentarti/total.totaltotal porcentajerequerido
-                                                                                                        from numeroarticulos natural join total)(select year1 A�o, numeroarticulos.cuentarti N�meroDeArt�culosPublicadosEnRevistas, numeroautores.numeroautors NumeroDeAutores, porcentaje.porcentajerequerido PorcentajeT
+                                                                                                        from numeroarticulos natural join total)(select year1 Año, numeroarticulos.cuentarti NúmeroDeArtículosPublicadosEnRevistas, numeroautores.numeroautors NumeroDeAutores, porcentaje.porcentajerequerido PorcentajeT
                                                                                                                                                                  from numeroarticulos natural join numeroautores natural join porcentaje
                                                                                                                                                                  union all
                                                                                                                                                                  select 'TOTAL', sum(numeroarticulos.cuentarti), sum(numeroautores.numeroautors), sum(porcentaje.porcentajerequerido)
