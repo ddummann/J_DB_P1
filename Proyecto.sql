@@ -41,7 +41,7 @@ create table Autor(
     codAutor number(4, 0) not null,
     nameAutor varchar(25) not null,
     lastNameAutor varchar(25) not null,
-    bithDateAutor date,
+    birthDateAutor date,
     emailAdress varchar(40) not null check (emailAdress like '%_@__%.__%'
     ),
     primary key (codAutor)
@@ -141,7 +141,7 @@ order by(lastNameAutor) asc, (nameAutor) asc;
 
 
 /* QUERY #2 */
-select "Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor: ", min(firstDate) as "Fecha Primera Publicación: ", max(lastDate)  as "Fecha Ultima Publicación", (LISTAGG(Areas, ';') WITHIN GROUP (order by Areas)) as "Areas: "
+select "Nombre Autor: ", "Numero de Articulos: ", "Autor Principal: ", "Coautor: ", min(firstDate) as "Fecha Primera Publicación: ", max(lastDate)  as "Fecha Ultima Publicación", (LISTAGG(Areas, ';')) as "Areas: "
 from (
         select concat(concat(lastNameAutor, ' '), nameAutor) as "Nombre Autor: ", 
         (
@@ -243,7 +243,7 @@ with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count
 /* QUERY #6 */
 
 with autoresarticulos as (
-select autor.nameautor, articulo.namearticulo, articulo.codarticulo, autor.bithdateautor, autor.bithdateautor as fecha
+select autor.nameautor, articulo.namearticulo, articulo.codarticulo, autor.birthdateautor, autor.birthdateautor as fecha
 from autoresxarticulo, articulo, autor
 where autoresxarticulo.codautor = autor.codautor and autoresxarticulo.codarticulo = articulo.codarticulo
 ),
@@ -261,42 +261,42 @@ group by anio
 ),
 
 menor as (
-select MAX(bithdateautor) as menanio
+select MAX(birthdateautor) as menanio
 from autoresarticulos
 ),
 
 mayor as (
-select MIN(bithdateautor) as maxanio
+select MIN(birthdateautor) as maxanio
 from autoresarticulos
 ),
 
 autores as (
-select publicacionarticulo.anio, autoresarticulos.nameautor, autoresarticulos.bithdateautor
+select publicacionarticulo.anio, autoresarticulos.nameautor, autoresarticulos.birthdateautor
 from anios, publicacionarticulo, autoresarticulos
 where anios.anio = publicacionarticulo.anio and publicacionarticulo.codarticulo = autoresarticulos.codarticulo
 ),
 
 menores as (
-select a.anio, a.nameautor, a.bithdateautor
+select a.anio, a.nameautor, a.birthdateautor
 from autores a
-where a.bithdateautor = (select max(a2.bithdateautor)
+where a.birthdateautor = (select max(a2.birthdateautor)
                          from autores a2
                          where a2.anio = a.anio
                         )
 ),
 
 mayores as (
-select a.anio, a.nameautor, a.bithdateautor
+select a.anio, a.nameautor, a.birthdateautor
 from autores a
-where a.bithdateautor = (select min(a2.bithdateautor)
+where a.birthdateautor = (select min(a2.birthdateautor)
                          from autores a2
                          where a2.anio = a.anio
                         )
 )
 
 select *
-from  menores mn, mayores my
-inner join mayores on mn.anio = my.anio;
+from  menores mn
+inner join mayores my on mn.anio = my.anio;
 
 
 /* QUERY #7 */
@@ -317,10 +317,9 @@ xyz as (select A.codAutor as xyz_1, count(E.abc_2) as xyz_2
 from Autor A left join abc E on A.codAutor = E.abc_1
 group by A.codAutor)
 
-select A.nameAutor || ' ' || A.lastNameAutor as NombreAutor, A.bithDateAutor, xyz.xyz_2 "Artículos Publicados"
+select A.nameAutor || ' ' || A.lastNameAutor as NombreAutor, A.birthDateAutor, xyz.xyz_2 "Artículos Publicados"
 from Autor A, xyz
 where xyz.xyz_1 = A.codAutor;
 
 grant all on autores_revista to public;
-
 
