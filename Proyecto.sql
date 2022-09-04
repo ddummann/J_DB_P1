@@ -252,7 +252,21 @@ group by R.codArtiRef2);
 
 /* QUERY #5 */ -- KEVIN
 
-
+select * from publicacion;
+with numeroarticulos as (select to_char(publisheddate_p, 'yyyy') as year1, count(codarticulo) as cuentarti
+                         from publicacion natural join articulo
+                         group by to_char(publisheddate_p, 'yyyy')
+                            ), numeroautores as (select to_char(publisheddate_p, 'yyyy') year1, count(distinct codautor) numeroautors
+                                                from articulo natural join publicacion natural join autoresxarticulo
+                                                group by to_char(publisheddate_p, 'yyyy')
+                                                    ), total as (select sum(cuentarti) totaltotal
+                                                                 from numeroarticulos), porcentaje as  (select numeroarticulos.year1, cuentarti/total.totaltotal porcentajerequerido
+                                                                                                        from numeroarticulos natural join total)(select year1 Año, numeroarticulos.cuentarti NúmeroDeArtículosPublicadosEnRevistas, numeroautores.numeroautors NumeroDeAutores, porcentaje.porcentajerequerido PorcentajeT
+                                                                                                                                                                 from numeroarticulos natural join numeroautores natural join porcentaje
+                                                                                                                                                                 union all
+                                                                                                                                                                 select 'TOTAL', sum(numeroarticulos.cuentarti), sum(numeroautores.numeroautors), sum(porcentaje.porcentajerequerido)
+                                                                                                                                                                 from numeroarticulos natural join numeroautores natural join porcentaje);
+                                                                                                                                                                 
 
 /* QUERY #6 */ -- ERNESTO
 
